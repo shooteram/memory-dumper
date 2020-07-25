@@ -303,18 +303,9 @@ int main(int argc, char **argv)
 		md->getChunksFromProcess();
 	}
 
-	//for(vector<Bits *>::iterator chunks_iter = md->chunks->begin(); chunks_iter != md->chunks->end(); ++chunks_iter){
-	//	(*chunks_iter)->toFile("./dumps/md.dump", 0, (*chunks_iter)->getMaxPosition(), ios_base::out | ios_base::binary | ios_base::app);
-	//}
-
-	for (vector<struct plugin_t *>::iterator plugins_iter = md->plugins->begin(); plugins_iter != md->plugins->end(); ++plugins_iter)
+	for (vector<Bits *>::iterator chunks_iter = md->chunks->begin(); chunks_iter != md->chunks->end(); ++chunks_iter)
 	{
-		for (vector<Bits *>::iterator chunks_iter = md->chunks->begin(); chunks_iter != md->chunks->end(); ++chunks_iter)
-		{
-			void *(*f)(Bits *);
-			f = (void *(*)(Bits *))dlsym((*plugins_iter)->hndl, "process");
-			f(*chunks_iter);
-		}
+		(*chunks_iter)->toFile("./dumps/md.dump", 0, (*chunks_iter)->getMaxPosition(), ios_base::out | ios_base::binary | ios_base::app);
 	}
 
 	delete md;
